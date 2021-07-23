@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --chdir=/scratch/jjjjia/dnabert_package
+#SBATCH --chdir=/scratch/jjjjia/dnabert_package_bertax/dnabert_package
 #SBATCH --account=def-fiona
 #SBATCH --job-name=GIBERT
 #SBATCH --nodes=1
@@ -11,6 +11,9 @@
 #SBATCH --mail-type=ALL
 
 date
+pwd
+workingDir=`pwd`
+
 cd $SLURM_TMPDIR
 pwd
 
@@ -24,7 +27,7 @@ if [ -f "environment.complete" ]
 then
 	echo "seems like environment is already installed, copying over deploy package"
 	rm -rf ./DNABERT/example
-	cp -rf /scratch/jjjjia/dnabert_package/deploy/example ./DNABERT
+	cp -rf $workingDir/deploy/example ./DNABERT
 	source temp_environment/bin/activate
 else
 	if [ -d "temp_environment" ]
@@ -43,7 +46,7 @@ else
 	cd DNABERT
 	echo "copying files"
 	#rm -rf ./DNABERT/examples
-	cp -rf /scratch/jjjjia/dnabert_package/deploy/* .
+	cp -rf $workingDir/deploy/* .
 	python3 -m pip install --no-index --editable .
 	echo "finished step 1"
 	cd examples
@@ -68,7 +71,7 @@ pwd
 cd DNABERT/examples
 ./example_pretrain.sh
 #./example_finetune.sh
-mkdir -p /scratch/jjjjia/dnabert_package/output
-cp -r ../examples /scratch/jjjjia/dnabert_package/output/
+mkdir -p $workingDir/output
+cp -r ../examples $workingDir/output/
 
 deactivate
