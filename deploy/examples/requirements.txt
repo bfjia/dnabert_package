@@ -1,0 +1,11 @@
+tensorboardX
+tensorboard==2.5.0
+scikit-learn >= 0.22.2
+seqeval
+pyahocorasick
+scipy
+statsmodels
+biopython
+pandas
+pybedtools
+sentencepiece==0.1.91
